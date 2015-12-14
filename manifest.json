@@ -1,8 +1,8 @@
 [
   {
     "name": "backup-cli.phar",
-    "sha1": "5a0f61c96d921f82b2676b82635ca338aa1946ca",
+    "sha1": "9dccfbb26429fff4a8a0792491402be41f590f16",
     "url": "http://fabioneves.github.io/backup-cli/backup-cli.phar",
-    "version": "1.0.3"
+    "version": "1.0.4"
   }
 ]
