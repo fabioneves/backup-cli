@@ -1,0 +1,17 @@
+{
+    "name": "fabioneves/host-cli",
+    "description": "PHP CLI app to manage a linux host",
+    "license": "MIT",
+    "require": {
+        "symfony/console": "^3.0",
+        "backup-manager/backup-manager": "dev-master",
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "symfony/yaml": "^3.0",
+        "padraic/phar-updater": "~1.0@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "src/"
+        }
+    }
+}

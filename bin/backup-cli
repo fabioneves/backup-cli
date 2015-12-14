@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+require __DIR__.'/../vendor/autoload.php';
+
+// Init application.
+$application = new Symfony\Component\Console\Application('Backup Manager', '@package_version@');
+
+// Add commands.
+$application->addCommands(
+  [
+    new app\Commands\BackupDb,
+    new app\Commands\RestoreDb,
+  ]
+);
+
+// Run the app.
+$application->run();
