@@ -22,7 +22,7 @@ If you prefer, you can manually download the phar from [here](https://fabioneves
 
 Backup CLI requires a `config` folder to live together with the phar file. This folder must contain the database (**db.yml**) and filesystem (**filesystem.yml**) configuration YAML files.
 
-### Configuration of database connections
+#### Configuration of database connections
 
 Backup CLI supports MySQL and PostgreSQL.
 
@@ -45,7 +45,7 @@ db_pgsql_profile_name:
   database: example
 ```
 
-### Configuration of filesystems
+#### Configuration of filesystems
 
 Currently Backup CLI supports **local** and **AWS S3** file systems. Here's an example of the configuration:
 
@@ -66,19 +66,19 @@ local:
 
 ## Commands
 
-### backup:db
+#### backup:db
 
 This command will backup a database to the specified target (filesystem). The backup file will be create on the target file system with the following structure: `database_profile/database_profile_d-m-Y_uniqid.sql.gz`.
 
     backup-cli.phar backup:db <connection> <target>
 
-### restore:db
+#### restore:db
 
 This command will restore a database backup from a filesystem/path and restore it to the specified database connection.
 
     backup-cli.phar restore:db <filesystem> <path> <connection>
 
-### self-update
+#### self-update
 
 Pretty self-explanatory, it'll auto update backup cli whenever there's a new version.
 
