@@ -24,6 +24,7 @@ class BackupDb extends Command
         // Check if the config files exist.
         if (!Config::check()) {
             $output->writeln('<error>Missing config files</error>');
+
             return;
         }
 
@@ -34,6 +35,7 @@ class BackupDb extends Command
         // Check if the db connection config exists.
         if (!Config::checkKey($db, 'db')) {
             $output->writeln("<error>The db connection '$db' was not found.</error>");
+
             return;
         }
 
@@ -45,7 +47,7 @@ class BackupDb extends Command
         }
 
         // Destination.
-        $destination = $db.'/'.$db.'_'.date('d-m-Y').'_'.uniqid().'.sql';
+        $destination = 'databases/'.$db.'/'.$db.'_'.date('d-m-Y').'_'.uniqid().'.sql';
 
         // Get DB backup manager.
         $manager = DbManager::get();
@@ -55,6 +57,7 @@ class BackupDb extends Command
             $manager->makeBackup()->run($db, $filesystem, $destination, 'gzip');
         } catch (\Exception $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");
+
             return;
         }
 

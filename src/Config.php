@@ -12,7 +12,7 @@ class Config
     {
         // Config path.
         $config_path = Config::path();
-
+        
         // Check if the 'db' and 'filesystem' config files exist.
         if ((!file_exists($config_path.'db.yml')) || (!file_exists($config_path.'filesystem.yml'))) {
             return false;
@@ -24,7 +24,7 @@ class Config
     // Get configuration path.
     static public function path()
     {
-        return (\Phar::running(false)) ? dirname(\Phar::running(false).'/config/') : __DIR__.'/config/';
+        return (\Phar::running(false)) ? dirname(\Phar::running(false)).'/config/' : __DIR__.'/../config/';
     }
 
     // Check if a key exists in a config file.
