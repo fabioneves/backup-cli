@@ -24,7 +24,7 @@ class Config
     // Get configuration path.
     static public function path()
     {
-        return (\Phar::running(false)) ? dirname(\Phar::running(false).'/config/') : __DIR__.'/../config/';
+        return (\Phar::running(false)) ? dirname(\Phar::running(false).'/config/') : __DIR__.'/config/';
     }
 
     // Check if a key exists in a config file.

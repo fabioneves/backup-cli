@@ -14,7 +14,7 @@
     }
   ],
   "git-version": "package_version",
-  "main": "bin/backup-cli",
-  "output": "backup-cli.phar",
+  "main": "backup-cli",
+  "output": "phar/backup-cli.phar",
   "stub": true
 }
