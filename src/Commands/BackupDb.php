@@ -44,7 +44,7 @@ class BackupDb extends Command
             return;
         }
 
-        // Destination (dbConn/month_year/dbConn_d-m-Y_His.sql).
+        // Destination.
         $destination = $db.'/'.$db.'_'.date('d-m-Y').'_'.uniqid().'.sql';
 
         // Get DB backup manager.

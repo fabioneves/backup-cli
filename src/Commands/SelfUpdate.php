@@ -29,7 +29,8 @@ class SelfUpdate extends Command
 
         try {
             $result = $updater->update();
-            $result ? exit('Updated!') : exit('No update needed!');
+            $message = $result ? '<info>Updated successfully!</info>' : 'You already have the latest version.';
+            $output->writeln($message);
         } catch (\Exception $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");
 
