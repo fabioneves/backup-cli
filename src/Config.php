@@ -12,7 +12,7 @@ class Config
     {
         // Config path.
         $config_path = Config::path();
-        
+
         // Check if the 'db' and 'filesystem' config files exist.
         if ((!file_exists($config_path.'db.yml')) || (!file_exists($config_path.'filesystem.yml'))) {
             return false;
@@ -43,7 +43,7 @@ class Config
     // Get all config from a specified file.
     static public function getFile($file = null)
     {
-        $config_path = (\Phar::running(false)) ? dirname(\Phar::running(false).'/config/') : __DIR__.'/../config/';
+        $config_path = Config::path();
         $config = [];
         if ((!empty($file)) && (file_exists($config_path.$file.'.yml'))) {
             try {
