@@ -3,6 +3,9 @@ The **Backup CLI** is a command-line interface to help you backup databases and 
 ## Requirements
 
 * PHP 5.5.9 or higher, with cURL support
+* MySQL support requires `mysqldump` and `mysql` command-line binaries
+* PostgreSQL support requires `pg_dump` and `psql` command-line binaries
+* Gzip support requires `gzip` and `gunzip` command-line binaries
 
 ## Installation
 
@@ -27,7 +30,7 @@ Backup CLI requires a `config` folder to live together with the phar file. This 
 Backup CLI supports MySQL and PostgreSQL.
 
 Example of **db.yml**:
-```
+```yaml
 db_mysql_profile_name:
   type: mysql
   host: localhost
@@ -49,7 +52,7 @@ db_pgsql_profile_name:
 
 Currently Backup CLI supports **local** and **AWS S3** file systems. Here's an example of the configuration:
 
-```
+```yaml
 s3:
   type: AwsS3
   key:
