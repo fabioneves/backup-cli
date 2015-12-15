@@ -17,7 +17,7 @@ Simply use this command:
 
 Whenever there is a new version of backup-cli just run this command:
 
-    backup-cli.phar self-update
+    php backup-cli.phar self-update
 
 If you prefer, you can manually download the phar from [here](https://fabioneves.github.io/backup-cli/backup-cli.phar).
 
@@ -73,19 +73,19 @@ local:
 
 This command will backup a database to the specified target (filesystem). The backup file will be create on the target file system with the following structure: `database_profile/database_profile_d-m-Y_uniqid.sql.gz`.
 
-    backup-cli.phar backup:db <connection> <target>
+    php backup-cli.phar backup:db <connection> <target>
 
 #### restore:db
 
 This command will restore a database backup from a filesystem/path and restore it to the specified database connection.
 
-    backup-cli.phar restore:db <filesystem> <path> <connection>
+    php backup-cli.phar restore:db <filesystem> <path> <connection>
 
 #### self-update
 
 Pretty self-explanatory, it'll auto update backup cli whenever there's a new version.
 
-    backup-cli.phar self-update
+    php backup-cli.phar self-update
 
 ## Credits
 
