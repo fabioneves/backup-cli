@@ -1,4 +1,6 @@
-The **Backup CLI** is a command-line interface to help you backup databases and files and send them to the cloud easily. This tool is being actively developed and more features will be added in the future. Currently we *only* have database support.
+# Backup CLI
+
+The **Backup CLI** is a command-line interface to backup databases and files. The aim of this tool is to provide a simple backup/restore process of databases and files to/from the cloud. Currently *only* databases and Amazon S3 is supported, more features will be added in the near future.
 
 ## Requirements
 
