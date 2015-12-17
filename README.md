@@ -54,8 +54,9 @@ db_pgsql_profile_name:
 
 #### Configuration of filesystems
 
-Currently Backup CLI supports **local** and **AWS S3** file systems. Here's an example of the configuration:
+Currently Backup CLI supports **local** and **AWS S3** file systems.
 
+Example of **filesystem.yml**:
 ```yaml
 s3:
   type: AwsS3
