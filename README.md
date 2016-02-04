@@ -1,8 +1,15 @@
-The **Backup CLI** is a command-line interface to help you backup databases and files and send them to the cloud easily. This tool is being actively developed and more features will be added in the future. Currently we *only* have database support.
+# Backup CLI
+
+The **Backup CLI** is a command-line interface to backup databases and files. The aim of this tool is to provide a simple backup/restore process of databases and files to/from the cloud.
+
+> Currently we only support Amazon S3 and databases backup/restore, more features will be added soon.
 
 ## Requirements
 
 * PHP 5.5.9 or higher, with cURL support
+* MySQL support requires `mysqldump` and `mysql` command-line binaries
+* PostgreSQL support requires `pg_dump` and `psql` command-line binaries
+* Gzip support requires `gzip` and `gunzip` command-line binaries
 
 ## Installation
 
@@ -14,7 +21,7 @@ Simply use this command:
 
 Whenever there is a new version of backup-cli just run this command:
 
-    backup-cli.phar self-update
+    php backup-cli.phar self-update
 
 If you prefer, you can manually download the phar from [here](https://fabioneves.github.io/backup-cli/backup-cli.phar).
 
@@ -27,7 +34,7 @@ Backup CLI requires a `config` folder to live together with the phar file. This 
 Backup CLI supports MySQL and PostgreSQL.
 
 Example of **db.yml**:
-```
+```yaml
 db_mysql_profile_name:
   type: mysql
   host: localhost
@@ -47,9 +54,10 @@ db_pgsql_profile_name:
 
 #### Configuration of filesystems
 
-Currently Backup CLI supports **local** and **AWS S3** file systems. Here's an example of the configuration:
+Currently Backup CLI supports **local** and **AWS S3** file systems.
 
-```
+Example of **filesystem.yml**:
+```yaml
 s3:
   type: AwsS3
   key:
@@ -70,19 +78,19 @@ local:
 
 This command will backup a database to the specified target (filesystem). The backup file will be create on the target file system with the following structure: `database_profile/database_profile_d-m-Y_uniqid.sql.gz`.
 
-    backup-cli.phar backup:db <connection> <target>
+    php backup-cli.phar backup:db <connection> <target>
 
 #### restore:db
 
 This command will restore a database backup from a filesystem/path and restore it to the specified database connection.
 
-    backup-cli.phar restore:db <filesystem> <path> <connection>
+    php backup-cli.phar restore:db <filesystem> <path> <connection>
 
 #### self-update
 
 Pretty self-explanatory, it'll auto update backup cli whenever there's a new version.
 
-    backup-cli.phar self-update
+    php backup-cli.phar self-update
 
 ## Credits
 
