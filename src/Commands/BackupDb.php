@@ -1,8 +1,7 @@
 <?php
-namespace app\Commands;
+namespace BackupCli\Commands;
 
-use app\Config;
-use app\DbManager;
+use BackupCli\Services\BackupService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,54 +14,17 @@ class BackupDb extends Command
     {
         $this->setName('backup:db')
           ->setDescription('Create a backup for the specified database connection.')
-          ->addArgument('connection', InputArgument::REQUIRED, 'Database connection to use for backup')
-          ->addArgument('target', InputArgument::REQUIRED, 'Filesystem that should be used to save the backup');
+          ->addArgument('database', InputArgument::REQUIRED, 'Database connection config to backup')
+          ->addArgument('target', InputArgument::REQUIRED, 'Target filesystem where the backup will be saved');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output)
     {
-        // Check if the config files exist.
-        if (!Config::check()) {
-            $output->writeln('<error>Missing config files</error>');
+        // Execute backup with input arguments.
+        $result = BackupService::db($input->getArguments());
 
-            return;
-        }
-
-        // Arguments.
-        $db = $input->getArgument('connection');
-        $filesystem = $input->getArgument('target');
-
-        // Check if the db connection config exists.
-        if (!Config::checkKey($db, 'db')) {
-            $output->writeln("<error>The db connection '$db' was not found.</error>");
-
-            return;
-        }
-
-        // Check if the filesystem config exists.
-        if (!Config::checkKey($filesystem, 'filesystem')) {
-            $output->writeln("<error>The target '$filesystem' config was not found.</error>");
-
-            return;
-        }
-
-        // Destination.
-        $destination = 'databases/'.$db.'/'.$db.'_'.date('d-m-Y').'_'.uniqid().'.sql';
-
-        // Get DB backup manager.
-        $manager = DbManager::get();
-
-        // Execute the backup task.
-        try {
-            $manager->makeBackup()->run($db, $filesystem, $destination, 'gzip');
-        } catch (\Exception $e) {
-            $output->writeln("<error>{$e->getMessage()}</error>");
-
-            return;
-        }
-
-        // If we get till here, backup was successful.
-        $output->writeln('<info>Database backup finished.</info>');
+        // Output the result of backup process.
+        $output->writeln($result);
     }
 
 

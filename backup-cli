@@ -8,9 +8,11 @@ $application = new Symfony\Component\Console\Application('Backup Manager', '@pac
 // Add commands.
 $application->addCommands(
   [
-    new app\Commands\BackupDb,
-    new app\Commands\RestoreDb,
-    new app\Commands\SelfUpdate,
+    new BackupCli\Commands\BackupDb,
+    new BackupCli\Commands\BackupFiles,
+    new BackupCli\Commands\RestoreDb,
+    new BackupCli\Commands\RestoreFiles,
+    new BackupCli\Commands\SelfUpdate,
   ]
 );
 

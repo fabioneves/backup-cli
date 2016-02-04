@@ -1,23 +1,25 @@
 <?php
 
-namespace app;
+namespace BackupCli\Services;
 
+use BackupCli\Config;
 use BackupManager\Compressors;
 use BackupManager\Config\Config as BackupManagerConfig;
 use BackupManager\Databases;
 use BackupManager\Filesystems;
 use BackupManager\Manager;
 
-class DbManager
+class ManagerService
 {
 
-    static public function get()
+    public static function bootstrap()
     {
-        // File systems.
+        // Filesystems.
         $target_config = Config::getFile('filesystem');
         $filesystems = new Filesystems\FilesystemProvider(new BackupManagerConfig($target_config));
-        $filesystems->add(new Filesystems\Awss3Filesystem);
         $filesystems->add(new Filesystems\LocalFilesystem);
+        $filesystems->add(new Filesystems\Awss3Filesystem);
+        $filesystems->add(new Filesystems\DropboxFilesystem);
 
         // Databases.
         $db_config = Config::getFile('db');
@@ -31,5 +33,19 @@ class DbManager
         $compressors->add(new Compressors\NullCompressor);
 
         return new Manager($filesystems, $databases, $compressors);
+    }
+
+    public static function backupDatabase($source, array $targets, $compression = 'gzip')
+    {
+        $manager = self::bootstrap();
+
+        return $manager->makeBackup()->run($source, $targets, $compression);
+    }
+
+    public static function restoreDatabase($filesystem, $path, $target_db, $compression = 'gzip')
+    {
+        $manager = self::bootstrap();
+
+        return $manager->makeRestore()->run($filesystem, $path, $target_db, $compression);
     }
 }

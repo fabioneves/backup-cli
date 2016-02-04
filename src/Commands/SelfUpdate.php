@@ -1,7 +1,7 @@
 <?php
-namespace app\Commands;
+namespace BackupCli\Commands;
 
-use app\Update\ManifestStrategy;
+use BackupCli\Services\Update\ManifestStrategy;
 use Humbug\SelfUpdate\Updater;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

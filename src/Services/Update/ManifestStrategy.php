@@ -1,5 +1,5 @@
 <?php
-namespace app\Update;
+namespace BackupCli\Services\Update;
 
 use Humbug\SelfUpdate\Exception\HttpRequestException;
 use Humbug\SelfUpdate\Exception\JsonParsingException;

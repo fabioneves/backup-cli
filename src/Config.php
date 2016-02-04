@@ -1,6 +1,6 @@
 <?php
 
-namespace app;
+namespace BackupCli;
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -8,7 +8,7 @@ class Config
 {
 
     // Check configuration paths.
-    static public function check()
+    private static function validate()
     {
         // Config path.
         $config_path = Config::path();
@@ -22,15 +22,15 @@ class Config
     }
 
     // Get configuration path.
-    static public function path()
+    public static function path()
     {
         return (\Phar::running(false)) ? dirname(\Phar::running(false)).'/config/' : __DIR__.'/../config/';
     }
 
     // Check if a key exists in a config file.
-    static public function checkKey($key = null, $file = null)
+    public static function checkKey($key = null, $file = null)
     {
-        if ((Config::check()) && (!empty($key)) && (!empty($file))) {
+        if ((Config::validate()) && (!empty($key)) && (!empty($file))) {
             $config = Config::getFile($file);
             if (!empty($config[$key])) {
                 return true;
@@ -41,18 +41,23 @@ class Config
     }
 
     // Get all config from a specified file.
-    static public function getFile($file = null)
+    public static function getFile($file = null)
     {
-        $config_path = Config::path();
-        $config = [];
-        if ((!empty($file)) && (file_exists($config_path.$file.'.yml'))) {
-            try {
-                $config = Yaml::parse(file_get_contents($config_path.$file.'.yml'));
-            } catch (ParseException $e) {
-                printf("Unable to parse the YAML string: %s", $e->getMessage());
+        // Validate configuration.
+        if (Config::validate() && (!empty($file))) {
+            $config_path = Config::path();
+            $config = [];
+            if ((!empty($file)) && (file_exists($config_path.$file.'.yml'))) {
+                try {
+                    $config = Yaml::parse(file_get_contents($config_path.$file.'.yml'));
+                } catch (ParseException $e) {
+                    printf("Unable to parse the YAML string: %s", $e->getMessage());
+                }
             }
+
+            return $config;
         }
 
-        return $config;
+        return false;
     }
 }
