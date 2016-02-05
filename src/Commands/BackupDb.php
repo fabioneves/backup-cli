@@ -20,6 +20,11 @@ class BackupDb extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        // Show message of database backup start.
+        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_NORMAL) {
+            $output->writeln("\n  Performing database backup using <fg=yellow>{$input->getArgument('database')}</> connection, please wait...");
+        }
+
         // Execute backup with input arguments.
         $result = BackupService::db($input->getArguments());
 

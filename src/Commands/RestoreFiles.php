@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class RestoreFiles extends Command
 {
@@ -21,6 +22,34 @@ class RestoreFiles extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_NORMAL) {
+            $helper = $this->getHelper('question');
+            $question = new ConfirmationQuestion("
+               <error>!!!!!!!!!! WARNING !!!!!!!!!!</error>
+
+  Restoring files can cause <fg=red>IRREVERSIBLE</> damage.
+  All existing files in the <fg=yellow>destination directory</> will be <fg=red>REPLACED</>.
+
+  <fg=green>Filesystem:</> <fg=yellow>{$input->getArgument('filesystem')}</>
+  <fg=green>Backup file:</> <fg=yellow>{$input->getArgument('filesystem_path')}</>
+  <fg=green>Destination directory:</> <fg=yellow>{$input->getArgument('destination_directory')}</>
+
+  Are you sure you want to proceed [y/n]? ",
+              false,
+              '/^(y|j)/i'
+            );
+
+            // Shows a message if the process is cancelled
+            if (!$helper->ask($input, $output, $question)) {
+                $output->writeln("\n  Files restore process <fg=yellow>cancelled</>.\n");
+
+                return;
+            }
+
+            $output->writeln("\n  Restoring files to <fg=yellow>{$input->getArgument('destination_directory')}</>, please wait...");
+        }
+
+
         // Execute backup with input arguments.
         $result = RestoreService::files($input->getArguments());
 

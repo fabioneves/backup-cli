@@ -27,7 +27,11 @@ class RestoreService
             }
 
             // If we get till here, it means there were no exceptions, so the backup process was successful.
-            return "<info>Files restore job was successfully completed.</info>";
+            return "\n  Files restored with success!
+
+  Filesystem: <fg=green>{$arguments['filesystem']}</>
+  Backup file: <fg=green>{$arguments['filesystem_path']}</>
+  Restore destination: <fg=green>{$arguments['destination_directory']}</>\n";
         }
     }
 
@@ -55,7 +59,11 @@ class RestoreService
             }
 
             // If we get till here, it means there were no exceptions, so the restore process was successful.
-            return "<info>Restored database backup to db config '{$arguments['database']}' with success!</info>";
+            return "\n  Database restored with success!
+
+  Filesystem: <fg=green>{$arguments['filesystem']}</>
+  Backup file: <fg=green>{$arguments['filesystem_path']}</>
+  Database: <fg=green>{$arguments['database']}</>\n";
         }
     }
 

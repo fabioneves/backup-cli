@@ -38,7 +38,7 @@ class BackupService
             }
 
             // If we get till here, it means there were no exceptions, so the backup process was successful.
-            return "<info>Files backup job was successfully completed.</info>";
+            return "  Backup <fg=green>successfully</> saved on <fg=yellow>{$target_path}</> using <fg=blue>{$arguments['target']}</> filesystem!\n";
         }
     }
 
@@ -73,7 +73,8 @@ class BackupService
             }
 
             // If we get till here, it means there were no exceptions, so the backup process was successful.
-            return "<info>Database '{$arguments['database']}' backup finished.</info>";
+            return "  Backup <fg=green>successfully</> saved on <fg=yellow>{$target_path}.gz</> using <fg=blue>{$arguments['target']}</> filesystem!\n";
+
         }
     }
 

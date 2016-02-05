@@ -23,6 +23,11 @@ class BackupFiles extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // Show message of database backup start.
+        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_NORMAL) {
+            $output->writeln("\n  Performing backup of <fg=yellow>{$input->getArgument('backup_path')}</>, please wait...");
+        }
+
         // Execute backup with input arguments.
         $result = BackupService::files($input->getArguments());
 
