@@ -2,6 +2,7 @@
 namespace BackupCli\Services;
 
 use BackupCli\Config;
+use BackupCli\Providers\DatabaseBackupProvider;
 use BackupCli\Providers\FileBackupProvider;
 use BackupManager\Filesystems\Destination;
 
@@ -38,7 +39,7 @@ class BackupService
             }
 
             // If we get till here, it means there were no exceptions, so the backup process was successful.
-            return "  Backup <fg=green>successfully</> saved on <fg=yellow>{$target_path}</> using <fg=blue>{$arguments['target']}</> filesystem!\n";
+            return "  Backup <fg=green>successfully</> saved on <fg=yellow>{$target_path}</> using <fg=blue>{$arguments['target']}</> filesystem.\n";
         }
     }
 
@@ -67,13 +68,13 @@ class BackupService
 
             // Execute the backup task.
             try {
-                ManagerService::backupDatabase($arguments['database'], $targets);
+                DatabaseBackupProvider::backupDatabase($arguments['database'], $targets);
             } catch (\Exception $e) {
                 return "<error>{$e->getMessage()}</error>";
             }
 
             // If we get till here, it means there were no exceptions, so the backup process was successful.
-            return "  Backup <fg=green>successfully</> saved on <fg=yellow>{$target_path}.gz</> using <fg=blue>{$arguments['target']}</> filesystem!\n";
+            return "  Backup <fg=green>successfully</> saved on <fg=yellow>{$target_path}.gz</> using <fg=blue>{$arguments['target']}</> filesystem.\n";
 
         }
     }

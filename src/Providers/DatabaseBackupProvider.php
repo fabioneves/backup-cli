@@ -1,6 +1,6 @@
 <?php
 
-namespace BackupCli\Services;
+namespace BackupCli\Providers;
 
 use BackupCli\Config;
 use BackupManager\Compressors;
@@ -9,7 +9,7 @@ use BackupManager\Databases;
 use BackupManager\Filesystems;
 use BackupManager\Manager;
 
-class ManagerService
+class DatabaseBackupProvider
 {
 
     public static function bootstrap()

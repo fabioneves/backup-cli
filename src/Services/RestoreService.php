@@ -2,6 +2,7 @@
 namespace BackupCli\Services;
 
 use BackupCli\Config;
+use BackupCli\Providers\DatabaseBackupProvider;
 use BackupCli\Providers\FileBackupProvider;
 
 class RestoreService
@@ -53,7 +54,7 @@ class RestoreService
 
             // Execute the restore task.
             try {
-                ManagerService::restoreDatabase($arguments['filesystem'], $arguments['filesystem_path'], $arguments['database']);
+                DatabaseBackupProvider::restoreDatabase($arguments['filesystem'], $arguments['filesystem_path'], $arguments['database']);
             } catch (\Exception $e) {
                 return "<error>{$e->getMessage()}</error>";
             }
