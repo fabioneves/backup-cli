@@ -2,8 +2,6 @@
 
 The **Backup CLI** is a command-line interface to backup databases and files. The aim of this tool is to provide a simple backup/restore process of databases and files to/from the cloud.
 
-> Currently we only support Amazon S3 and databases backup/restore, more features will be added soon.
-
 ## Requirements
 
 * PHP 5.5.9 or higher, with cURL support
