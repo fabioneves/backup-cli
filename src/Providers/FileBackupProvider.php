@@ -1,6 +1,7 @@
 <?php
 namespace BackupCli\Providers;
 
+use BackupCli\Filesystems\OVHFilesystem;
 use BackupManager\Config\Config;
 use BackupManager\Filesystems;
 use BackupManager\Procedures\Procedure;
