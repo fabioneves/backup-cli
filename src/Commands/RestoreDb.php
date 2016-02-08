@@ -14,10 +14,10 @@ class RestoreDb extends Command
     protected function configure()
     {
         $this->setName('restore:db')
-          ->setDescription('Restore a database backup for the specified connection.')
-          ->addArgument('filesystem', InputArgument::REQUIRED, 'Source filesystem where the backup is')
-          ->addArgument('filesystem_path', InputArgument::REQUIRED, 'Path of the backup file from the source filesystem root')
-          ->addArgument('database', InputArgument::REQUIRED, 'Database connection that should be used to restore the database backup');
+          ->setDescription('Restore a database backup.')
+          ->addArgument('filesystem', InputArgument::REQUIRED, 'Source filesystem to pull the backup file.')
+          ->addArgument('filesystem_path', InputArgument::REQUIRED, 'Path of the backup file from the source filesystem root.')
+          ->addArgument('database', InputArgument::REQUIRED, 'Database to be restored.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

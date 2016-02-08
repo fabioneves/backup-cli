@@ -12,14 +12,14 @@ class BackupService
     // Backup files.
     public static function files($arguments = [])
     {
-        // Check if we have a 'backup_path', 'target' and a 'target_path'.
-        if ((!empty($arguments['backup_path'])) && (!empty($arguments['target'])) && (!empty($arguments['target_path']))) {
+        // Check if we have a 'backup_directory', 'target' and a 'target_directory'.
+        if ((!empty($arguments['backup_directory'])) && (!empty($arguments['target'])) && (!empty($arguments['target_directory']))) {
 
             // Exclude optional argument.
             $exclude = empty($arguments['exclude']) ? null : $arguments['exclude'];
 
             // Build destinations.
-            $target_path = 'files/'.$arguments['target_path'].'/files_backup_'.date('d-m-Y').'_'.uniqid().'.tar.gz';
+            $target_path = 'files/'.$arguments['target_directory'].'/files_backup_'.date('d-m-Y').'_'.uniqid().'.tar.gz';
             $input_targets = explode(',', $arguments['target']);
             foreach ($input_targets as $target) {
                 // Check if the filesystem config exists.
@@ -33,7 +33,7 @@ class BackupService
             // Files backup.
             try {
                 $files = new FileBackupProvider(Config::getFile('filesystem'));
-                $files->backup($arguments['backup_path'], $targets, $exclude);
+                $files->backup($arguments['backup_directory'], $targets, $exclude);
             } catch (\Exception $e) {
                 return "<error>{$e->getMessage()}</error>";
             }

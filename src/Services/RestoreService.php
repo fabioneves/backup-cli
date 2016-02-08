@@ -32,7 +32,7 @@ class RestoreService
 
   Filesystem: <fg=green>{$arguments['filesystem']}</>
   Backup file: <fg=green>{$arguments['filesystem_path']}</>
-  Restore destination: <fg=green>{$arguments['destination_directory']}</>\n";
+  Extracted to: <fg=green>{$arguments['destination_directory']}</>\n";
         }
     }
 

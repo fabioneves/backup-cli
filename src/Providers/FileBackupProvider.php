@@ -90,6 +90,7 @@ class FileBackupProvider extends Procedure
         // Tar command string.
         $tar_command = "tar $exclude_argument $excludes -cvzf $backup_file -C $backup_path .";
         $process = new Process($tar_command);
+        $process->setTimeout(0);
         $process->run();
 
         // If the tar fails, throw a new exception.
@@ -106,6 +107,7 @@ class FileBackupProvider extends Procedure
         // Tar command string.
         $tar_command = "mkdir -p $directory && tar -xf $backup_file -C $directory";
         $process = new Process($tar_command);
+        $process->setTimeout(0);
         $process->run();
 
         // If the tar fails, throw a new exception.

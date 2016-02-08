@@ -13,9 +13,9 @@ class BackupDb extends Command
     protected function configure()
     {
         $this->setName('backup:db')
-          ->setDescription('Create a backup for the specified database connection.')
-          ->addArgument('database', InputArgument::REQUIRED, 'Database connection config to backup')
-          ->addArgument('target', InputArgument::REQUIRED, 'Target filesystem where the backup will be saved');
+          ->setDescription('Backup a database and compress it.')
+          ->addArgument('database', InputArgument::REQUIRED, 'Database to backup (needs to exist in config).')
+          ->addArgument('target', InputArgument::REQUIRED, 'Target filesystem where the backup will be saved.');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

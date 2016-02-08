@@ -14,10 +14,10 @@ class BackupFiles extends Command
     protected function configure()
     {
         $this->setName('backup:files')
-          ->setDescription('Create a backup of a specified path and compress it.')
-          ->addArgument('backup_path', InputArgument::REQUIRED, 'Path to backup')
-          ->addArgument('target', InputArgument::REQUIRED, 'Target filesystem where the backup will be saved')
-          ->addArgument('target_path', InputArgument::REQUIRED, 'Target filesystem path where the backup should be stored')
+          ->setDescription('Backup a directory and compress it into a single file.')
+          ->addArgument('backup_directory', InputArgument::REQUIRED, 'Directory to backup.')
+          ->addArgument('target', InputArgument::REQUIRED, 'Target filesystem where the backup will be saved.')
+          ->addArgument('target_directory', InputArgument::REQUIRED, 'Where to save the backup file on target filesystem.')
           ->addOption('exclude', null, InputOption::VALUE_REQUIRED, 'Directories to exclude (separate with a comma)');
     }
 
@@ -25,7 +25,7 @@ class BackupFiles extends Command
     {
         // Show message of database backup start.
         if ($output->getVerbosity() >= OutputInterface::VERBOSITY_NORMAL) {
-            $output->writeln("\n  Performing backup of <fg=yellow>{$input->getArgument('backup_path')}</>, please wait...");
+            $output->writeln("\n  Performing backup of <fg=yellow>{$input->getArgument('backup_directory')}</>, please wait...");
         }
 
         // Execute backup with input arguments.

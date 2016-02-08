@@ -10,7 +10,9 @@
     "league/flysystem-aws-s3-v3": "^1.0",
     "symfony/yaml": "^3.0",
     "padraic/phar-updater": "~1.0@dev",
-    "league/flysystem-dropbox": "^1.0"
+    "league/flysystem-dropbox": "^1.0",
+    "league/flysystem-rackspace": "^1.0",
+    "techyah/flysystem-ovh": "^1.0"
   },
 
   "require-dev": {

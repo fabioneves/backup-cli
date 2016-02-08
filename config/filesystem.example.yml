@@ -10,3 +10,11 @@ s3:
 local:
   type: Local
   root: /usr/local/backups
+
+ovh:
+  type: ovh
+  username:
+  password:
+  tenant_id:
+  container: default
+  region: SBG1

@@ -14,9 +14,9 @@ class RestoreFiles extends Command
     protected function configure()
     {
         $this->setName('restore:files')
-          ->setDescription('Create a backup of a specified path and compress it.')
+          ->setDescription('Restore a file backup and extract the contents into a directory.')
           ->addArgument('filesystem', InputArgument::REQUIRED, 'Target filesystem where the backup is hosted')
-          ->addArgument('filesystem_path', InputArgument::REQUIRED, 'Target filesystem file path of the backup file to be retrieved')
+          ->addArgument('filesystem_path', InputArgument::REQUIRED, 'File path of the backup in the target filesystem')
           ->addArgument('destination_directory', InputArgument::REQUIRED, 'Directory to extract the contents of the backup file');
     }
 
@@ -46,7 +46,7 @@ class RestoreFiles extends Command
                 return;
             }
 
-            $output->writeln("\n  Restoring files to <fg=yellow>{$input->getArgument('destination_directory')}</>, please wait...");
+            $output->writeln("\n  Downloading and extracting backup to <fg=yellow>{$input->getArgument('destination_directory')}</>, please wait...");
         }
 
 

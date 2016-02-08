@@ -3,6 +3,7 @@
 namespace BackupCli\Providers;
 
 use BackupCli\Config;
+use BackupCli\Filesystems\OVHFilesystem;
 use BackupManager\Compressors;
 use BackupManager\Config\Config as BackupManagerConfig;
 use BackupManager\Databases;
@@ -20,6 +21,7 @@ class DatabaseBackupProvider
         $filesystems->add(new Filesystems\LocalFilesystem);
         $filesystems->add(new Filesystems\Awss3Filesystem);
         $filesystems->add(new Filesystems\DropboxFilesystem);
+        $filesystems->add(new OVHFilesystem);
 
         // Databases.
         $db_config = Config::getFile('db');
