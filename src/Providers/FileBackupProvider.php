@@ -21,6 +21,7 @@ class FileBackupProvider extends Procedure
         $this->filesystems->add(new Filesystems\LocalFilesystem);
         $this->filesystems->add(new Filesystems\Awss3Filesystem);
         $this->filesystems->add(new Filesystems\DropboxFilesystem);
+        $this->filesystems->add(new OVHFilesystem);
 
         // Set local filesystem.
         $this->local_filesystem = $this->filesystems->get('local');
