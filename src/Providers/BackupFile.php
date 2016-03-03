@@ -1,48 +1,42 @@
 <?php
 namespace BackupCli\Providers;
 
-use BackupCli\Filesystems\OVHFilesystem;
-use BackupManager\Config\Config;
-use BackupManager\Filesystems;
-use BackupManager\Procedures\Procedure;
 use BackupManager\Procedures\Sequence;
 use BackupManager\Tasks\Storage\DeleteFile;
 use BackupManager\Tasks\Storage\TransferFile;
 use Symfony\Component\Process\Process;
 
-class FileBackupProvider extends Procedure
+class BackupFile extends Backup
 {
 
-    private $local_filesystem;
-
-    public function __construct(array $filesystem_config)
+    public function backup($backup_path, $targets, $exclude, $compression = '7zip')
     {
-        // Filesystems.
-        $this->filesystems = new Filesystems\FilesystemProvider(new Config($filesystem_config));
-        $this->filesystems->add(new Filesystems\LocalFilesystem);
-        $this->filesystems->add(new Filesystems\Awss3Filesystem);
-        $this->filesystems->add(new Filesystems\DropboxFilesystem);
-        $this->filesystems->add(new OVHFilesystem);
-
-        // Set local filesystem.
-        $this->local_filesystem = $this->filesystems->get('local');
-    }
-
-    public function backup($backup_path, $targets, $exclude)
-    {
-        // Init sequence.
+        // Init.
         $sequence = new Sequence;
+        $local_filesystem = $this->filesystems->get('local');
+
+        // Build destinations.
+        $target_path = 'files/'.$arguments['target_directory'].'/files_backup_'.date('d-m-Y').'_'.uniqid().'.tar.gz';
+        $input_targets = explode(',', $arguments['target']);
+        foreach ($input_targets as $target) {
+            // Check if the filesystem config exists.
+            if (!Config::checkKey($target, 'filesystem')) {
+                return "<error>The target '$target' config was not found.</error>";
+            }
+            // Add this filesystem to the targets array.
+            $targets[] = new Destination($target, $target_path);
+        }
 
         // Working file.
-        $working_file = $this->getWorkingFile('local').'.tar.gz';
+        $working_file = $this->getWorkingFile('local');
 
         // Create local files backup.
-        $this->tar($backup_path, $working_file);
+        $working_file = $this->createBackupFile($compression, $backup_path, $working_file, $exclude);
 
         // Upload the archive to the targets.
         foreach ($targets as $target) {
             $sequence->add(new TransferFile(
-              $this->local_filesystem,
+              $local_filesystem,
               basename($working_file),
               $this->filesystems->get($target->destinationFilesystem()),
               $target->destinationPath()
@@ -77,9 +71,44 @@ class FileBackupProvider extends Procedure
         $del_file->execute();
     }
 
-    // Compresses a directory.
+    // Create backup file.
+    private function createBackupFile($compression, $backup_path, $backup_file, $exclude)
+    {
+        switch ($compression) {
+            case '7zip':
+                $backup_file = $this->sZipCreate($backup_path, $backup_file, $exclude);
+            default:
+                $backup_file = $this->tar($backup_path, $backup_file, $exclude);
+                break;
+        }
+
+        return $backup_file;
+    }
+
+    // Compresses a directory with 7zip.
+    private function sZipCreate($backup_path, $backup_file, $exclude = null)
+    {
+        // Backup filename.
+        $backup_file = $backup_file.'.7z';
+
+        // Create file archive with volumes of 4G.
+        $command = "7za a -v4g $backup_file $backup_path";
+        $process = $this->run($command);
+
+        // If the tar fails, throw a new exception.
+        if (!$process->isSuccessful()) {
+            throw new \Exception('Failed to create backup archive: '.$process->getErrorOutput());
+        }
+
+        return $backup_file;
+    }
+
+    // Compresses a directory with tar.
     private function tar($backup_path, $backup_file, $exclude = null)
     {
+        // Backup filename.
+        $backup_file = $backup_file.'.tar.gz';
+
         // Exclude string.
         $exclude_argument = null;
         if ($exclude) {
@@ -100,7 +129,7 @@ class FileBackupProvider extends Procedure
             throw new \Exception('Failed to create backup archive: '.$process->getErrorOutput());
         }
 
-        return true;
+        return $backup_file;
     }
 
     // Extracts a tar.gz file contents to a directory.
@@ -120,4 +149,12 @@ class FileBackupProvider extends Procedure
         return true;
     }
 
+    private function run($command)
+    {
+        $process = new Process($command);
+        $process->setTimeout(0);
+        $process->run();
+
+        return $process;
+    }
 }

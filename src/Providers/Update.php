@@ -8,7 +8,7 @@ use Humbug\SelfUpdate\Updater;
 use Humbug\SelfUpdate\VersionParser;
 
 
-class UpdateProvider implements StrategyInterface
+class Update implements StrategyInterface
 {
     /** @var string */
     private $manifestUrl;

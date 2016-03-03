@@ -14,7 +14,7 @@ class Config
         $config_path = Config::path();
 
         // Check if the 'db' and 'filesystem' config files exist.
-        if ((!file_exists($config_path.'db.yml')) || (!file_exists($config_path.'filesystem.yml'))) {
+        if ((!file_exists($config_path.'database.yml')) || (!file_exists($config_path.'storage.yml'))) {
             return false;
         }
 

@@ -1,12 +1,12 @@
 <?php
 namespace BackupCli\Commands;
 
-use BackupCli\Services\RestoreService;
+use BackupCli\Services\Restore;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class RestoreDb extends Command
 {
@@ -15,14 +15,16 @@ class RestoreDb extends Command
     {
         $this->setName('restore:db')
           ->setDescription('Restore a database backup.')
-          ->addArgument('filesystem', InputArgument::REQUIRED, 'Source filesystem to pull the backup file.')
-          ->addArgument('filesystem_path', InputArgument::REQUIRED, 'Path of the backup file from the source filesystem root.')
-          ->addArgument('database', InputArgument::REQUIRED, 'Database to be restored.');
+          ->addArgument('database', InputArgument::REQUIRED, 'Database to restore')
+          ->addArgument('storage', InputArgument::REQUIRED, 'Storage where the backup file is located')
+          ->addArgument('backup_file_path', InputArgument::REQUIRED, 'Backup file path from the root of storage system')
+          ->addArgument('compression', InputArgument::REQUIRED, 'Compression type (7zip, 7zip-ultra, 7zip-null, gzip)')
+          ->addOption('parts', 'p', InputOption::VALUE_REQUIRED, 'How many backup file parts (if this is a multipart backup)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_NORMAL) {
+        /*if ($output->getVerbosity() >= OutputInterface::VERBOSITY_NORMAL) {
             $helper = $this->getHelper('question');
             $question = new ConfirmationQuestion("
                <error>!!!!!!!!!! WARNING !!!!!!!!!!</error>
@@ -48,9 +50,15 @@ class RestoreDb extends Command
 
             $output->writeln("\n  Restoring database using <fg=yellow>{$input->getArgument('database')}</> connection, please wait...");
 
-        }
+        }*/
         // Execute backup with input arguments.
-        $result = RestoreService::db($input->getArguments());
+        $result = Restore::database(
+          $input->getArgument('database'),
+          $input->getArgument('storage'),
+          $input->getArgument('backup_file_path'),
+          $input->getArgument('compression'),
+          $input->getOption('parts')
+        );
 
         // Output the result of backup process.
         $output->writeln($result);

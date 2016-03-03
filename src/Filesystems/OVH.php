@@ -9,7 +9,7 @@ use League\Flysystem\Filesystem as Flysystem;
  * Class DropboxFilesystem
  * @package BackupManager\Filesystems
  */
-class OVHFilesystem implements Filesystem {
+class OVH implements Filesystem {
 
     /**
      * Test fitness of visitor.
