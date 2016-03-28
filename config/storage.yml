@@ -1,0 +1,20 @@
+local:
+  type: Local
+  root: /usr/local/backups
+
+s3:
+  type: AwsS3
+  key:
+  secret:
+  region: eu-west-1
+  version: latest
+  bucket:
+  root:
+
+ovh:
+  type: ovh
+  username:
+  password:
+  tenant_id:
+  container: default
+  region: SBG1
