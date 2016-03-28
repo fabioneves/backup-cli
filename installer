@@ -130,7 +130,7 @@ if (empty($latest)) {
 }
 
 output("  Downloading version {$latest->version}...");
-if (!file_put_contents($pharFilename, file_get_contents($latest->url . $pharFilename))) {
+if (!file_put_contents($pharFilename, file_get_contents($latest->folder . $pharFilename))) {
     output("  The download failed.", 'error');
 }
 
@@ -151,7 +151,7 @@ try {
     throw $e;
 }
 
-output("  Making the Phar executable...");
+output("  Making the phar executable...");
 chmod($pharFilename, 0755);
 $executable = $pharFilename;
 
@@ -159,10 +159,10 @@ $executable = $pharFilename;
 if (!file_exists('config')) {
     mkdir('config', 0755);
 }
-if (!file_put_contents('config/database.yml', file_get_contents($latest->url . 'config/database.yml'))) {
+if (!file_put_contents('config/database.yml', file_get_contents($latest->folder . 'config/database.yml'))) {
     output("  Failed to download database.yml config file.", 'error');
 }
-if (!file_put_contents('config/storage.yml', file_get_contents($latest->url . 'config/storage.yml'))) {
+if (!file_put_contents('config/storage.yml', file_get_contents($latest->folder . 'config/storage.yml'))) {
     output("  Failed to download storage.yml config file.", 'error');
 }
 
