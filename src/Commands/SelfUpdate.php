@@ -1,7 +1,7 @@
 <?php
 namespace BackupCli\Commands;
 
-use BackupCli\Providers\UpdateProvider;
+use BackupCli\Providers\Update;
 use Humbug\SelfUpdate\Updater;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,7 +20,7 @@ class SelfUpdate extends Command
     {
         $updater = new Updater(null, false);
         $updater->setStrategyObject(
-          new UpdateProvider(
+          new Update(
             $this->getApplication()->getVersion(),
             true,
             'http://fabioneves.github.io/backup-cli/manifest.json'
