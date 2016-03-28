@@ -5,6 +5,7 @@ use BackupCli\Compressors\SevenZipNull;
 use BackupCli\Compressors\SevenZipUltra;
 use BackupCli\Config;
 use BackupCli\Filesystems\OVH;
+use BackupCli\Tasks\DecompressFileAlt;
 use BackupManager\Compressors;
 use BackupManager\Config\Config as BackupManagerConfig;
 use BackupManager\Databases;
@@ -50,17 +51,18 @@ class Backup extends Procedure
         return new ShellProcessor(new Process('', null, null, null, null));
     }
 
-    protected function decompressBackup($backup_file, $compression, $parts = 1)
+    protected function decompressBackup($backup_file, $compression, $destination = null)
     {
         // Compressor.
         $compressor = $this->compressors->get($compression);
 
         try {
             // Unpack files.
-            $unpack = new Tasks\Compression\DecompressFile(
+            $unpack = new DecompressFileAlt(
               $compressor,
               $backup_file,
-              $this->shellProcessor
+              $this->shellProcessor,
+              $destination
             );
             $unpack->execute();
 
@@ -98,8 +100,12 @@ class Backup extends Procedure
 
     protected function deleteFiles($files)
     {
-        foreach ($files as $file) {
-            $this->deleteFile(basename($file));
+        if (is_array($files)) {
+            foreach ($files as $file) {
+                $this->deleteFile(basename($file));
+            }
+        } else {
+            $this->deleteFile(basename($files));
         }
     }
 
@@ -145,7 +151,7 @@ class Backup extends Procedure
             }
             // Failed to download.
             if (strpos($e->getMessage(), 'File not found at path:') !== false) {
-                $message = "Failed to download file, please verify the path or 7zip parts number.\n  File (<fg=green>$storage</>): <fg=white>$backup_file</>";
+                $message = "Failed to get the backup file, please verify the path (don't include root in the backup path) or check 7zip parts number.\n  <fg=white>Backup path (<fg=green>$storage</><fg=white>):</> <fg=yellow>$backup_file</>";
             }
             throw new \Exception($message);
         }

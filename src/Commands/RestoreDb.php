@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class RestoreDb extends Command
 {
@@ -24,7 +25,7 @@ class RestoreDb extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /*if ($output->getVerbosity() >= OutputInterface::VERBOSITY_NORMAL) {
+        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_NORMAL) {
             $helper = $this->getHelper('question');
             $question = new ConfirmationQuestion("
                <error>!!!!!!!!!! WARNING !!!!!!!!!!</error>
@@ -32,9 +33,9 @@ class RestoreDb extends Command
   Restoring a database can cause <fg=yellow>IRREVERSIBLE</> damage.
   You are about to <fg=red>DESTROY</> a complete database!
 
-  <fg=green>Filesystem:</> <fg=yellow>{$input->getArgument('filesystem')}</>
-  <fg=green>Backup file:</> <fg=yellow>{$input->getArgument('filesystem_path')}</>
-  <fg=green>Database:</> <fg=yellow>{$input->getArgument('database')}</>
+  Storage:</> <fg=blue>{$input->getArgument('storage')}</>
+  Backup file:</> <fg=yellow>{$input->getArgument('backup_file_path')}</>
+  Database profile:</> <fg=green>{$input->getArgument('database')}</>
 
   Do you really want to proceed [y/n]? ",
               false,
@@ -48,9 +49,9 @@ class RestoreDb extends Command
                 return;
             }
 
-            $output->writeln("\n  Restoring database using <fg=yellow>{$input->getArgument('database')}</> connection, please wait...");
+            $output->writeln("\n  Restoring database backup using <fg=yellow>{$input->getArgument('database')}</> profile, please wait...");
 
-        }*/
+        }
         // Execute backup with input arguments.
         $result = Restore::database(
           $input->getArgument('database'),

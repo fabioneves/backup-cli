@@ -1,3 +1,7 @@
+local:
+  type: Local
+  root: /usr/local/backups
+
 s3:
   type: AwsS3
   key:
@@ -6,10 +10,6 @@ s3:
   version: latest
   bucket:
   root:
-
-local:
-  type: Local
-  root: /usr/local/backups
 
 ovh:
   type: ovh

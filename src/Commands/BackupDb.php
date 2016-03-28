@@ -18,7 +18,7 @@ class BackupDb extends Command
           ->addArgument('database', InputArgument::REQUIRED, 'Database profile to backup (needs to exist in config).')
           ->addOption('storage', 's', InputOption::VALUE_REQUIRED, 'Storage system where the backup will be saved')
           ->addOption('compression', 'c', InputOption::VALUE_REQUIRED, 'Compression type (7zip, 7zip-ultra, 7zip-null, gzip, null)')
-          ->addOption('directory', 'd', InputOption::VALUE_REQUIRED, 'Directory to store the backup in the storage system');
+          ->addOption('directory', 'd', InputOption::VALUE_REQUIRED, 'Directory to save the backup');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

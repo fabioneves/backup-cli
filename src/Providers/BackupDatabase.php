@@ -25,6 +25,13 @@ class BackupDatabase extends Backup
 
         // Upload the backup file(s) to the storage.
         $this->uploadBackup($backup_file, $storage, $storage_directory);
+
+        // Return information about the backup.
+        return [
+          'file'      => is_array($backup_file) ? basename($backup_file[0]) . ' (parts: ' . count($backup_file) . ')' : basename($backup_file),
+          'storage'   => $storage,
+          'directory' => $storage_directory,
+        ];
     }
 
     public function restore($database, $storage, $backup_file, $compression, $parts)
@@ -33,7 +40,7 @@ class BackupDatabase extends Backup
         $working_file = $this->downloadBackup($backup_file, $storage, $parts);
 
         // Decompress the archived backup.
-        $working_file = $this->decompressBackup($working_file, $compression, $parts);
+        $working_file = $this->decompressBackup($working_file, $compression);
 
         // Restore the database.
         $this->restoreDatabase($database, $working_file);

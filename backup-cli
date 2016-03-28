@@ -3,7 +3,7 @@
 require __DIR__.'/vendor/autoload.php';
 
 // Init application.
-$application = new Symfony\Component\Console\Application('Backup Manager', '@package_version@');
+$application = new Symfony\Component\Console\Application('Backup CLI', '@package_version@');
 
 // Add commands.
 $application->addCommands(

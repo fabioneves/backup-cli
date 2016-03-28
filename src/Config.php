@@ -14,7 +14,7 @@ class Config
         $config_path = Config::path();
 
         // Check if the 'db' and 'filesystem' config files exist.
-        if ((!file_exists($config_path.'database.yml')) || (!file_exists($config_path.'storage.yml'))) {
+        if ((!file_exists($config_path . 'database.yml')) || (!file_exists($config_path . 'storage.yml'))) {
             return false;
         }
 
@@ -24,7 +24,7 @@ class Config
     // Get configuration path.
     public static function path()
     {
-        return (\Phar::running(false)) ? dirname(\Phar::running(false)).'/config/' : __DIR__.'/../config/';
+        return (\Phar::running(false)) ? dirname(\Phar::running(false)) . '/config/' : __DIR__ . '/../config/';
     }
 
     // Check if a key exists in a config file.
@@ -47,9 +47,9 @@ class Config
         if (Config::validate() && (!empty($file))) {
             $config_path = Config::path();
             $config = [];
-            if ((!empty($file)) && (file_exists($config_path.$file.'.yml'))) {
+            if ((!empty($file)) && (file_exists($config_path . $file . '.yml'))) {
                 try {
-                    $config = Yaml::parse(file_get_contents($config_path.$file.'.yml'));
+                    $config = Yaml::parse(file_get_contents($config_path . $file . '.yml'));
                 } catch (ParseException $e) {
                     printf("Unable to parse the YAML string: %s", $e->getMessage());
                 }
@@ -60,4 +60,15 @@ class Config
 
         return false;
     }
+
+    public static function getStorage($storage)
+    {
+        $storage_config = self::getFile('storage');
+        if (!empty($storage_config[$storage])) {
+            return $storage_config[$storage];
+        }
+        
+        return null;
+    }
+
 }

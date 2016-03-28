@@ -8,8 +8,10 @@ class SevenZipNull extends SevenZip
         return strtolower($type) == '7zip-null';
     }
 
-    public function getCompressCommandLine($inputPath)
+    public function getCompressCommandLine($inputPath, $optionalPath = null, $delete = false)
     {
-        return '7za a -sdel -mx0 -v3g ' . escapeshellarg($inputPath) . '.7z ' . escapeshellarg($inputPath);
+        $optionalPath = empty($optionalPath) ? $inputPath : $optionalPath;
+        $delete_switch = empty($delete) ? null : '-sdel';
+        return '7za a ' . $delete_switch . ' -mx0 -v3g ' . escapeshellarg($inputPath) . '.7z ' . $optionalPath;
     }
 }
