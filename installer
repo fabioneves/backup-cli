@@ -137,7 +137,7 @@ if (!file_put_contents($pharFilename, file_get_contents($latest->folder . $pharF
 output("  Checking file integrity...");
 if ($latest->sha1 !== sha1_file($pharFilename)) {
     unlink($pharFilename);
-    output("  The download was corrupted.", 'error');
+    output("  Invalid file checksum, possible corrupted download.", 'error');
     exit(1);
 }
 
