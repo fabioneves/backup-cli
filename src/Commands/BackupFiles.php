@@ -18,7 +18,7 @@ class BackupFiles extends Command
           ->setDescription('Backup a directory and compress it using the specified compressor.')
           ->addArgument('directory', InputArgument::REQUIRED, 'Directory to backup.')
           ->addOption('storage', 's', InputOption::VALUE_REQUIRED, 'Storage system where the backup will be saved')
-          ->addOption('storage_directory', 'd', InputOption::VALUE_REQUIRED, 'Where to save the backup on the specified storage.')
+          ->addOption('directory', 'd', InputOption::VALUE_REQUIRED, 'Directory to save the backup')
           ->addOption('compression', 'c', InputOption::VALUE_REQUIRED, 'Compression type (7zip, 7zip-ultra, 7zip-null, gzip, null)')
           ->addOption('exclude', 'e', InputOption::VALUE_REQUIRED, 'Directories to exclude (separate with a comma)');
     }
@@ -34,7 +34,7 @@ class BackupFiles extends Command
         $result = Backup::files(
           $input->getArgument('directory'),
           $input->getOption('storage'),
-          $input->getOption('storage_directory'),
+          $input->getOption('directory'),
           $input->getOption('compression'),
           $input->getOption('exclude')
         );
