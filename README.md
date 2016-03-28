@@ -1,6 +1,6 @@
 # Backup CLI
 
-The **Backup CLI** is a command-line interface to backup databases and files. The aim of this tool is to provide a simple backup/restore process of databases and files to/from the cloud.
+The **Backup CLI** is a command-line interface tool to backup your databases and files. The aim of this tool is to provide a simple backup process of db and files to the cloud.
 
 ## Requirements
 
@@ -8,6 +8,7 @@ The **Backup CLI** is a command-line interface to backup databases and files. Th
 * MySQL support requires `mysqldump` and `mysql` command-line binaries
 * PostgreSQL support requires `pg_dump` and `psql` command-line binaries
 * Gzip support requires `gzip` and `gunzip` command-line binaries
+* 7zip support requires `7za` command-line binaries
 
 ## Installation
 
@@ -17,7 +18,7 @@ Simply use this command:
 
 ## Updating
 
-Whenever there is a new version of backup-cli just run this command:
+To update to a newer version of backup-cli just run this command:
 
     php backup-cli.phar self-update
 
@@ -25,7 +26,7 @@ If you prefer, you can manually download the phar from [here](https://fabioneves
 
 ## Configuration
 
-Backup CLI requires a `config` folder to live together with the phar file. This folder must contain the database (**db.yml**) and filesystem (**filesystem.yml**) configuration YAML files.
+Backup CLI requires a `config` folder to live together with the phar file. This folder must contain the database and storage configurations (**database.yml** and **storage.yml**).
 
 #### Configuration of database connections
 
@@ -50,11 +51,11 @@ db_pgsql_profile_name:
   database: example
 ```
 
-#### Configuration of filesystems
+#### Configuration of storage systems.
 
-Currently Backup CLI supports **local** and **AWS S3** file systems.
+Backup CLI supports various cloud/storage systems, have a look at the default storage.yml provided to setup your preferred cloud system.
 
-Example of **filesystem.yml**:
+Example of **storage.yml**:
 ```yaml
 s3:
   type: AwsS3
@@ -93,6 +94,6 @@ Pretty self-explanatory, it'll auto update backup cli whenever there's a new ver
 ## Credits
 
 * [Symfony](http://symfony.com): for the console and other wonderful components
-* [Database Backup Manager](https://github.com/backup-manager/backup-manager): the package that started this and backup cli relies heavily on it
+* [Database Backup Manager](https://github.com/backup-manager/backup-manager): the package that inspired me to do this
 * [Padraic phar updater](https://github.com/padraic/phar-updater): made 'self-update' be possible!
 * [Platform.sh](https://platform.sh): for the installer and [ManifestStrategy](https://github.com/pjcdawkins/platformsh-cli/blob/replace-phar-update/src/SelfUpdate/ManifestStrategy.php) for phar updater.
