@@ -12,6 +12,6 @@ class SevenZipUltra extends SevenZip
     {
         $optionalPath = empty($optionalPath) ? $inputPath : $optionalPath;
         $delete_switch = empty($delete) ? null : '-sdel';
-        return '7za a ' . $delete_switch . ' -mx9 -v3g ' . escapeshellarg($inputPath) . '.7z ' . $optionalPath;
+        return '7za a ' . $delete_switch . ' -mx9 -v1g ' . escapeshellarg($inputPath) . '.7z ' . $optionalPath;
     }
 }

@@ -8,6 +8,8 @@ $application = new Symfony\Component\Console\Application('Backup CLI', '@package
 // Add commands.
 $application->addCommands(
   [
+    new BackupCli\Commands\ProfileNewDb,
+    new BackupCli\Commands\ProfileListDb,
     new BackupCli\Commands\BackupDb,
     new BackupCli\Commands\BackupFiles,
     new BackupCli\Commands\RestoreDb,
