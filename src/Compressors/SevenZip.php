@@ -16,7 +16,7 @@ class SevenZip extends Compressor
         $optionalPath = empty($optionalPath) ? $inputPath : $optionalPath;
         $delete_switch = empty($delete) ? null : '-sdel';
         $exclude = $this->excludeArguments($exclude);
-        return '7za a ' . $delete_switch . ' -mx5 -v1g ' . $exclude . escapeshellarg($inputPath) . '.7z ' . escapeshellarg($optionalPath);
+        return '7za a ' . $delete_switch . ' -mx5 -v512m ' . $exclude . escapeshellarg($inputPath) . '.7z ' . escapeshellarg($optionalPath);
     }
 
     public function getDecompressCommandLine($outputPath, $optionalPath = null)
