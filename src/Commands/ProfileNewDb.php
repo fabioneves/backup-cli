@@ -15,7 +15,7 @@ class ProfileNewDb extends Command
     protected function configure()
     {
         $this->setName('profile:newdb')
-          ->setDescription('Creates a new database profile in config/database.yml.')
+          ->setDescription('Creates a new database profile.')
           ->addArgument('database', InputArgument::REQUIRED, 'Database name')
           ->addArgument('username', InputArgument::REQUIRED, 'Database username')
           ->addArgument('password', InputArgument::REQUIRED, 'Database password')

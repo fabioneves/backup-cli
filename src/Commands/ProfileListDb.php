@@ -12,7 +12,7 @@ class ProfileListDb extends Command
 
     protected function configure()
     {
-        $this->setName('profile:listdb')->setDescription('Lists database profiles on config/database.yml.');
+        $this->setName('profile:listdb')->setDescription('Lists all the existing database profiles.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
