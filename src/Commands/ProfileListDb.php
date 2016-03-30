@@ -20,12 +20,12 @@ class ProfileListDb extends Command
         // Database data.
         $databases = Config::getFile('database');
         foreach ($databases as $profile => $data) {
-            $dbs[] = [$profile, $data['type'], $data['database'], $data['user'], $data['pass'], $data['host'], $data['port']];
+            $dbs[] = [$profile, $data['type'], $data['database'], $data['user'], $data['host'], $data['port']];
         }
 
         // Output table.
         $table = new Table($output);
-        $table->setHeaders(['Profile', 'Type', 'Database', 'Username', 'Password', 'Server', 'Port'])->setRows($dbs);
+        $table->setHeaders(['Profile', 'Type', 'Database', 'Username', 'Server', 'Port'])->setRows($dbs);
         $table->render();
     }
 
